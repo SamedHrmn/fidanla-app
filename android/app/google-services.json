@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "799453182039",
+    "firebase_url": "https://fidanla-app-default-rtdb.firebaseio.com",
+    "project_id": "fidanla-app",
+    "storage_bucket": "fidanla-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799453182039:android:b6e4c722aa4bdc53b9cb12",
+        "android_client_info": {
+          "package_name": "com.technovation.fidanla_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799453182039-r6q0jthrj2jnfugeo52rmfrrqli0q4al.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.technovation.fidanla_app",
+            "certificate_hash": "9d5e2fb18e4f8ea62769a9ad9dbf430002263449"
+          }
+        },
+        {
+          "client_id": "799453182039-aepkbr8ubqsuls7pmuul584cebrm0d8o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfM-H1FIqpQD_QQkewZofsO8cWJ5B863E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "799453182039-aepkbr8ubqsuls7pmuul584cebrm0d8o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
