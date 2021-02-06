@@ -1,7 +1,3 @@
-import 'package:fidanla_app/core/components/base_scaffold.dart';
-import 'package:fidanla_app/home_screen.dart';
-import 'package:fidanla_app/profile_screen.dart';
-import 'package:fidanla_app/tree_catalog_screen.dart';
 import 'package:flutter/material.dart';
 
 class StatisticScreen extends StatefulWidget {
@@ -14,9 +10,9 @@ class _StatisticScreenState extends State<StatisticScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseScaffold(
+    return Scaffold(
       appBar: AppBar(
-        title: Text("İSTATİSTİKLER"),
+        title: Text("İstatistikler"),
       ),
     );
   }

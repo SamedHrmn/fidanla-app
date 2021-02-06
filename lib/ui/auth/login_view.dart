@@ -1,6 +1,7 @@
 import 'package:fidanla_app/core/components/button_widget.dart';
 import 'package:fidanla_app/core/constants/assets_constants.dart';
 import 'package:fidanla_app/home_screen.dart';
+import 'package:fidanla_app/tabbar_router.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -79,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 icon: Icon(Icons.check),
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()));
+                      MaterialPageRoute(builder: (context) => TabbarRouter()));
                 },
                 labelText: Text("Giriş Yap"),
                 borderColor: Colors.white),

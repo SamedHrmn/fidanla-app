@@ -4,18 +4,12 @@ import 'package:fidanla_app/statistic_screen.dart';
 import 'package:fidanla_app/tree_catalog_screen.dart';
 import 'package:flutter/material.dart';
 
-class BaseScaffold extends StatefulWidget {
-  final PreferredSizeWidget appBar;
-  BaseScaffold({
-    @required this.appBar,
-    Key key,
-  }) : super(key: key);
-
+class TabbarRouter extends StatefulWidget {
   @override
-  _BaseScaffoldState createState() => _BaseScaffoldState();
+  _TabbarRouterState createState() => _TabbarRouterState();
 }
 
-class _BaseScaffoldState extends State<BaseScaffold>
+class _TabbarRouterState extends State<TabbarRouter>
     with SingleTickerProviderStateMixin {
   int selectedIndex = 0;
   TabController _tabController;
@@ -23,7 +17,7 @@ class _BaseScaffoldState extends State<BaseScaffold>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
+    _tabController = TabController(length: 4, vsync: this, initialIndex: 0);
   }
 
   @override
@@ -34,9 +28,7 @@ class _BaseScaffoldState extends State<BaseScaffold>
 
   @override
   Widget build(BuildContext context) {
-    print("CURRENT INDEX: " + selectedIndex.toString());
     return Scaffold(
-      appBar: widget.appBar,
       bottomNavigationBar: TabBar(
         unselectedLabelColor: Colors.grey,
         labelColor: Colors.black,
@@ -44,16 +36,18 @@ class _BaseScaffoldState extends State<BaseScaffold>
         indicatorColor: Colors.black,
         tabs: [
           Tab(icon: Icon(Icons.home)),
-          Tab(icon: Icon(Icons.search)),
-          Tab(icon: Icon(Icons.add_box)),
+          Tab(icon: Icon(Icons.assistant_photo_outlined)),
+          Tab(icon: Icon(Icons.account_circle_rounded)),
+          Tab(icon: Icon(Icons.bar_chart)),
         ],
       ),
       body: TabBarView(
         controller: _tabController,
         children: [
           HomeScreen(),
+          TreeCatalogScreen(),
           ProfileScreen(),
-          ProfileScreen(),
+          StatisticScreen(),
         ],
       ),
     );
