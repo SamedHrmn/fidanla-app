@@ -24,7 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.0
-  persistent_bottom_nav_bar: ^3.1.0
+  
 
 dev_dependencies:
   flutter_test:
