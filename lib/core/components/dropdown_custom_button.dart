@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class DropdownCurrencyButton extends StatelessWidget {
-  const DropdownCurrencyButton({
+class CustomDropDownButton extends StatelessWidget {
+  const CustomDropDownButton({
     Key key,
     @required this.currencyBase,
     this.callback,

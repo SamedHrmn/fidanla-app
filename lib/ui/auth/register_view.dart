@@ -1,6 +1,5 @@
 import 'package:fidanla_app/core/components/button_widget.dart';
 import 'package:fidanla_app/core/constants/assets_constants.dart';
-import 'package:fidanla_app/home_screen.dart';
 import 'package:fidanla_app/tabbar_router.dart';
 import 'package:fidanla_app/ui/auth/login_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -42,128 +41,156 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: Form(
         key: formKey,
         child: Stack(children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(AssetConstanst.LOGIN_BACKGROUND_PATH),
-                    fit: BoxFit.fill)),
-          ),
+          buildBackgroundContainer(context),
           Column(
             children: [
-              Container(
-                margin: EdgeInsets.only(top: 65),
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(AssetConstanst.LOGIN_ICON_PATH),
-                        fit: BoxFit.cover)),
-              ),
+              buildIconContainer(),
               SizedBox(
                 height: 50,
               ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 40),
-                child: TextFormField(
-                  keyboardType: TextInputType.name,
-                  decoration: InputDecoration(
-                      labelText: "Ad Soyad",
-                      labelStyle: TextStyle(color: Colors.white),
-                      hintText: "Ad Soyad",
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide:
-                              BorderSide(width: 2, color: Colors.white))),
-                  onSaved: (data) => isimSoyisim = data,
-                  validator: (value) {
-                    return null;
-                  },
-                ),
-              ),
+              buildAdSoyadTextFormField(),
               SizedBox(
                 height: 16,
               ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 40),
-                child: TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                      labelText: "E-mail",
-                      labelStyle: TextStyle(color: Colors.white),
-                      hintText: "@example.com",
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide:
-                              BorderSide(width: 2, color: Colors.white))),
-                  onSaved: (data) => email = data,
-                  validator: (value) {
-                    return null;
-                  },
-                ),
-              ),
+              buildEmailTextFormField(),
               SizedBox(
                 height: 16,
               ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 40),
-                child: TextFormField(
-                  keyboardType: TextInputType.visiblePassword,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                      labelText: "Sifre",
-                      labelStyle: TextStyle(color: Colors.white),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide:
-                              BorderSide(width: 2, color: Colors.white))),
-                  onSaved: (data) => sifre = data,
-                  validator: (value) {
-                    return null;
-                  },
-                ),
-              ),
+              buildSifreTextFormField(),
               SizedBox(
                 height: 16,
               ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 40),
-                child: TextFormField(
-                  keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(
-                      labelText: "Telefon",
-                      labelStyle: TextStyle(color: Colors.white),
-                      hintText: "(0555)-555-55-55",
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide:
-                              BorderSide(width: 2, color: Colors.white))),
-                  onSaved: (data) => telefon = data,
-                  validator: (value) {
-                    return null;
-                  },
-                ),
-              ),
+              buildTelefonTextFormField(),
               SizedBox(height: 32),
-              ButtonRegister(
-                  onPressed: saveToFirebase,
-                  bgColor: Color(0xFF6C7EBA).withOpacity(0.4),
-                  icon: Icon(Icons.check),
-                  labelText: Text("Kaydol"),
-                  borderColor: Colors.white),
-              GestureDetector(
-                child: Text("Zaten üyeyim.."),
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LoginScreen(),
-                    )),
-              )
+              buildRegisterButton(),
+              buildLoginPageRouteButton(context)
             ],
           )
         ]),
       ),
+    );
+  }
+
+  GestureDetector buildLoginPageRouteButton(BuildContext context) {
+    return GestureDetector(
+      child: Text("Zaten üyeyim.."),
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LoginScreen(),
+          )),
+    );
+  }
+
+  ButtonRegister buildRegisterButton() {
+    return ButtonRegister(
+        onPressed: saveToFirebase,
+        bgColor: Color(0xFF6C7EBA).withOpacity(0.4),
+        icon: Icon(Icons.check),
+        labelText: Text("Kaydol"),
+        borderColor: Colors.white);
+  }
+
+  Container buildTelefonTextFormField() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 40),
+      child: TextFormField(
+        keyboardType: TextInputType.phone,
+        decoration: InputDecoration(
+            labelText: "Telefon",
+            labelStyle: TextStyle(color: Colors.white),
+            hintText: "(0555)-555-55-55",
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(width: 2, color: Colors.white))),
+        onSaved: (data) => telefon = data,
+        validator: (value) {
+          return null;
+        },
+      ),
+    );
+  }
+
+  Container buildSifreTextFormField() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 40),
+      child: TextFormField(
+        keyboardType: TextInputType.visiblePassword,
+        obscureText: true,
+        decoration: InputDecoration(
+            labelText: "Sifre",
+            labelStyle: TextStyle(color: Colors.white),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(width: 2, color: Colors.white))),
+        onSaved: (data) => sifre = data,
+        validator: (value) {
+          return null;
+        },
+      ),
+    );
+  }
+
+  Container buildEmailTextFormField() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 40),
+      child: TextFormField(
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+            labelText: "E-mail",
+            labelStyle: TextStyle(color: Colors.white),
+            hintText: "@example.com",
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(width: 2, color: Colors.white))),
+        onSaved: (data) => email = data,
+        validator: (value) {
+          return null;
+        },
+      ),
+    );
+  }
+
+  Container buildAdSoyadTextFormField() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 40),
+      child: TextFormField(
+        keyboardType: TextInputType.name,
+        decoration: InputDecoration(
+            labelText: "Ad Soyad",
+            labelStyle: TextStyle(color: Colors.white),
+            hintText: "Ad Soyad",
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(width: 2, color: Colors.white))),
+        onSaved: (data) => isimSoyisim = data,
+        validator: (value) {
+          return null;
+        },
+      ),
+    );
+  }
+
+  Container buildIconContainer() {
+    return Container(
+      margin: EdgeInsets.only(top: 65),
+      width: 100,
+      height: 100,
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(AssetConstanst.LOGIN_ICON_PATH),
+              fit: BoxFit.cover)),
+    );
+  }
+
+  Container buildBackgroundContainer(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(AssetConstanst.LOGIN_BACKGROUND_PATH),
+              fit: BoxFit.fill)),
     );
   }
 

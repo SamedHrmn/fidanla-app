@@ -1,5 +1,5 @@
 import 'package:fidanla_app/core/components/button_widget.dart';
-import 'package:fidanla_app/core/components/dropdown_currency_button.dart';
+import 'package:fidanla_app/core/components/dropdown_custom_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -139,7 +139,7 @@ class _TreeCatalogScreenState extends State<TreeCatalogScreen> {
                     decoration: BoxDecoration(
                         border: Border.all(width: 1, color: Colors.blue),
                         borderRadius: BorderRadius.circular(12)),
-                    child: DropdownCurrencyButton(
+                    child: CustomDropDownButton(
                       currencyBase: countryList,
                       selectedVal: selectedCountry,
                       callback: dropDownCountryCallback,
@@ -150,7 +150,7 @@ class _TreeCatalogScreenState extends State<TreeCatalogScreen> {
                     decoration: BoxDecoration(
                         border: Border.all(width: 1, color: Colors.blue),
                         borderRadius: BorderRadius.circular(12)),
-                    child: DropdownCurrencyButton(
+                    child: CustomDropDownButton(
                       currencyBase: ilceList,
                       selectedVal: selectedIlce,
                       callback: dropDownIlceCallback,
