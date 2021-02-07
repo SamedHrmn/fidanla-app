@@ -8,10 +8,10 @@ void main() async {
   await Firebase.initializeApp();
 
   /*final _firebaseReferance = FirebaseDatabase().reference().child("trees");
-  String name = "Cinar";
-  String price = "15";
+  String name = "Kavak";
+  String price = "10";
   String img =
-      "https://firebasestorage.googleapis.com/v0/b/fidanla-app.appspot.com/o/agac3.png?alt=media&token=276cde43-a4af-4f64-90da-2b368b88608d";
+      "https://firebasestorage.googleapis.com/v0/b/fidanla-app.appspot.com/o/agac4.png?alt=media&token=2554f70c-ac1a-4e90-98aa-e67e656601c6";
 
   _firebaseReferance.push().set({
     "tree_name": name,

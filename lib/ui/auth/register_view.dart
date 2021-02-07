@@ -170,6 +170,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: _email, password: _psw);
+
+      _firebaseReferance.child(userCredential.user.uid).set({
+        "username": _name,
+        "email": _email,
+        "password": _psw,
+        "phonenumber": _phone,
+        "timestamp": DateTime.now().millisecondsSinceEpoch
+      });
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -187,15 +195,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     //Firebase İşlemleri
 
-    _firebaseReferance.push().set({
-      "username": _name,
-      "email": _email,
-      "password": _psw,
-      "phonenumber": _phone,
-      "timestamp": DateTime.now().millisecondsSinceEpoch
-    });
-
-    print("YAZDIM");
+    // print("YAZDIM");
   }
 
   register() {
