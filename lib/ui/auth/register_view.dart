@@ -82,8 +82,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  ButtonRegister buildRegisterButton() {
-    return ButtonRegister(
+  CustomButton buildRegisterButton() {
+    return CustomButton(
         onPressed: saveToFirebase,
         bgColor: Color(0xFF6C7EBA).withOpacity(0.4),
         icon: Icon(Icons.check),
@@ -223,10 +223,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     } catch (e) {
       print(e);
     }
-
-    //Firebase İşlemleri
-
-    // print("YAZDIM");
   }
 
   register() {

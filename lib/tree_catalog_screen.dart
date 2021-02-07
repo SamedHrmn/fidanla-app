@@ -83,91 +83,13 @@ class _TreeCatalogScreenState extends State<TreeCatalogScreen> {
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: 300,
-                child: PageView.builder(
-                  onPageChanged: (value) => pageIndexCallback(value),
-                  itemCount: treeItem.length,
-                  itemBuilder: (context, index) {
-                    return Column(children: [
-                      Container(
-                          margin: EdgeInsets.all(24),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(24),
-                              border: Border.all(width: 1, color: Colors.blue)),
-                          width: MediaQuery.of(context).size.width,
-                          height: 250,
-                          child: PageView(
-                            children: [
-                              Container(
-                                child: Column(children: [
-                                  Image(
-                                    image: NetworkImage(treeItem[index]
-                                            ["tree_image"]
-                                        .toString()),
-                                    width: 200,
-                                    height: 200,
-                                  ),
-                                  SizedBox(
-                                    height: 16,
-                                  ),
-                                  Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Text("Ağaç türü: " +
-                                              treeItem[index]["tree_name"]
-                                                  .toString()),
-                                          Text("Fiyat:" +
-                                              treeItem[index]["tree_price"] +
-                                              "\$"),
-                                        ],
-                                      )),
-                                ]),
-                              ),
-                            ],
-                          )),
-                    ]);
-                  },
-                ),
+                child: buildPageView(),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(2),
-                    decoration: BoxDecoration(
-                        border: Border.all(width: 1, color: Colors.blue),
-                        borderRadius: BorderRadius.circular(12)),
-                    child: CustomDropDownButton(
-                      currencyBase: countryList,
-                      selectedVal: selectedCountry,
-                      callback: dropDownCountryCallback,
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(2),
-                    decoration: BoxDecoration(
-                        border: Border.all(width: 1, color: Colors.blue),
-                        borderRadius: BorderRadius.circular(12)),
-                    child: CustomDropDownButton(
-                      currencyBase: ilceList,
-                      selectedVal: selectedIlce,
-                      callback: dropDownIlceCallback,
-                    ),
-                  ),
-                ],
-              ),
+              buildDropdownButtons(),
               SizedBox(
                 height: 12,
               ),
-              ButtonRegister(
-                bgColor: Color(0xFF6C7EBA),
-                icon: Icon(Icons.shopping_basket),
-                labelText: Text("Ödemeye git"),
-                borderColor: Colors.white,
-                onPressed: () => saveShopInfoFirebase(),
-              ),
+              buildSavedButton(),
             ]);
           }
 
@@ -176,6 +98,93 @@ class _TreeCatalogScreenState extends State<TreeCatalogScreen> {
           );
         },
       ),
+    );
+  }
+
+  CustomButton buildSavedButton() {
+    return CustomButton(
+      bgColor: Color(0xFF6C7EBA),
+      icon: Icon(Icons.shopping_basket),
+      labelText: Text("Ödemeye git"),
+      borderColor: Colors.white,
+      onPressed: () => saveShopInfoFirebase(),
+    );
+  }
+
+  Row buildDropdownButtons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Container(
+          padding: EdgeInsets.all(2),
+          decoration: BoxDecoration(
+              border: Border.all(width: 1, color: Colors.blue),
+              borderRadius: BorderRadius.circular(12)),
+          child: CustomDropDownButton(
+            currencyBase: countryList,
+            selectedVal: selectedCountry,
+            callback: dropDownCountryCallback,
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.all(2),
+          decoration: BoxDecoration(
+              border: Border.all(width: 1, color: Colors.blue),
+              borderRadius: BorderRadius.circular(12)),
+          child: CustomDropDownButton(
+            currencyBase: ilceList,
+            selectedVal: selectedIlce,
+            callback: dropDownIlceCallback,
+          ),
+        ),
+      ],
+    );
+  }
+
+  PageView buildPageView() {
+    return PageView.builder(
+      onPageChanged: (value) => pageIndexCallback(value),
+      itemCount: treeItem.length,
+      itemBuilder: (context, index) {
+        return Column(children: [
+          Container(
+              margin: EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(24),
+                  border: Border.all(width: 1, color: Colors.blue)),
+              width: MediaQuery.of(context).size.width,
+              height: 250,
+              child: PageView(
+                children: [
+                  Container(
+                    child: Column(children: [
+                      Image(
+                        image: NetworkImage(
+                            treeItem[index]["tree_image"].toString()),
+                        width: 200,
+                        height: 200,
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text("Ağaç türü: " +
+                                  treeItem[index]["tree_name"].toString()),
+                              Text("Fiyat:" +
+                                  treeItem[index]["tree_price"] +
+                                  "\$"),
+                            ],
+                          )),
+                    ]),
+                  ),
+                ],
+              )),
+        ]);
+      },
     );
   }
 

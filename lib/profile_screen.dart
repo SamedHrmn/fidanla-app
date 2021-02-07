@@ -33,25 +33,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: <Color>[Color(0xFF6C7EBA), Color(0xFFD1AC9)])),
-          ),
-          actions: [
-            IconButton(
-                icon: Icon(Icons.logout),
-                onPressed: () {
-                  FirebaseAuth.instance.signOut();
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LoginScreen(),
-                      ));
-                })
-          ],
+          flexibleSpace: buildGradientAppBarContainer(),
+          actions: [buildLogoutButton(context)],
           title: Text("Profil"),
         ),
         body: StreamBuilder(
@@ -64,53 +47,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               return Column(
                 children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.3,
-                    color: Colors.white,
-                    child: Row(
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                  border:
-                                      Border.all(width: 1, color: Colors.blue),
-                                  borderRadius: BorderRadius.circular(16)),
-                              margin: EdgeInsets.only(left: 24),
-                              child: Column(
-                                children: [
-                                  Container(
-                                      width: 50,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            image: AssetImage(AssetConstanst
-                                                .LOGIN_ICON_PATH)),
-                                      )),
-                                  Text("Kullanıcı : " + data["username"]),
-                                  Text("Toplam dikim sayısı: " +
-                                      data["user_tree_count"]),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: 50),
-                          child: Row(
-                            children: [
-                              Icon(Icons.star),
-                              Icon(Icons.star),
-                              Icon(Icons.star)
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                  buildProfileSectionContainer(context, data),
                   Expanded(
                       child: Container(
                     color: Colors.white,
@@ -128,59 +65,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             treedata.forEach((index, data) =>
                                 treeitem.add({"timestamp": index, ...data}));
 
-                            return ListView.builder(
-                              itemCount: treeitem.length,
-                              itemBuilder: (context, treeindex) {
-                                return Container(
-                                  height: 45,
-                                  child: Card(
-                                    elevation: 8,
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 20,
-                                        ),
-                                        Container(
-                                            width: 25,
-                                            height: 25,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: Color(0xFF6C7EBA),
-                                            ),
-                                            child: Center(
-                                                child: Text(
-                                              treeindex.toString(),
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ))),
-                                        SizedBox(
-                                          width: 20,
-                                        ),
-                                        Text(
-                                          "Türü ${treeitem[treeindex]['tree_name']} olan fidan alındı",
-                                          style: TextStyle(fontSize: 13),
-                                        ),
-                                        Spacer(),
-                                        Text(
-                                          formatDate(
-                                              (DateTime
-                                                  .fromMicrosecondsSinceEpoch(
-                                                      treeitem[treeindex]
-                                                              ['timestamp'] *
-                                                          1000)),
-                                              [yyyy, '-', mm, '-', dd]),
-                                          style: TextStyle(fontSize: 12),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
+                            return buildListView(treeitem);
                           }
 
                           return Center(
@@ -199,5 +84,123 @@ class _ProfileScreenState extends State<ProfileScreen> {
             );
           },
         ));
+  }
+
+  ListView buildListView(List treeitem) {
+    return ListView.builder(
+      itemCount: treeitem.length,
+      itemBuilder: (context, treeindex) {
+        return Container(
+          height: 45,
+          child: Card(
+            elevation: 8,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 20,
+                ),
+                Container(
+                    width: 25,
+                    height: 25,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Color(0xFF6C7EBA),
+                    ),
+                    child: Center(
+                        child: Text(
+                      treeindex.toString(),
+                      style: TextStyle(color: Colors.white),
+                    ))),
+                SizedBox(
+                  width: 20,
+                ),
+                Text(
+                  "Türü ${treeitem[treeindex]['tree_name']} olan fidan alındı",
+                  style: TextStyle(fontSize: 13),
+                ),
+                Spacer(),
+                Text(
+                  formatDate(
+                      (DateTime.fromMicrosecondsSinceEpoch(
+                          treeitem[treeindex]['timestamp'] * 1000)),
+                      [yyyy, '-', mm, '-', dd]),
+                  style: TextStyle(fontSize: 12),
+                ),
+                SizedBox(
+                  width: 10,
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Container buildProfileSectionContainer(BuildContext context, Map data) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height * 0.3,
+      color: Colors.white,
+      child: Row(
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                    border: Border.all(width: 1, color: Colors.blue),
+                    borderRadius: BorderRadius.circular(16)),
+                margin: EdgeInsets.only(left: 24),
+                child: Column(
+                  children: [
+                    Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image:
+                                  AssetImage(AssetConstanst.LOGIN_ICON_PATH)),
+                        )),
+                    Text("Kullanıcı : " + data["username"]),
+                    Text("Toplam dikim sayısı: " + data["user_tree_count"]),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 50),
+            child: Row(
+              children: [Icon(Icons.star), Icon(Icons.star), Icon(Icons.star)],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  IconButton buildLogoutButton(BuildContext context) {
+    return IconButton(
+        icon: Icon(Icons.logout),
+        onPressed: () {
+          FirebaseAuth.instance.signOut();
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => LoginScreen(),
+              ));
+        });
+  }
+
+  Container buildGradientAppBarContainer() {
+    return Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: <Color>[Color(0xFF6C7EBA), Color(0xFFD1AC9)])),
+    );
   }
 }

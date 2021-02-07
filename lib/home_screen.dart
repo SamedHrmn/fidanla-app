@@ -24,13 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: <Color>[Color(0xFF6C7EBA), Color(0xFFD1AC9)])),
-        ),
+        flexibleSpace: buildGradientAppBarContainer(),
         title: Text("Anasayfa"),
       ),
       body: Container(
@@ -46,42 +40,57 @@ class _HomeScreenState extends State<HomeScreen> {
               data.forEach(
                   (index, data) => item.add({"email": index, ...data}));
 
-              return ListView.builder(
-                  itemCount: item.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.all(15.0),
-                      padding: const EdgeInsets.all(3.0),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.blueAccent),
-                          borderRadius: BorderRadius.circular(16)),
-                      child: ListTile(
-                        leading: Icon(Icons.star),
-                        title: Text(item[index]['username']),
-                        subtitle: Text(
-                            "Toplam dikim:" + item[index]['user_tree_count']),
-                        trailing: Text(formatDate(
-                            (DateTime.fromMicrosecondsSinceEpoch(
-                                item[index]['timestamp'] * 1000)),
-                            [yyyy, '-', mm, '-', dd])),
-                      ),
-                    );
-                  });
+              return buildListView(item);
             } else
-              return Center(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.now_widgets_outlined,
-                        size: 100,
-                      ),
-                      Text("Henüz kayıtlı veri yok.")
-                    ]),
-              );
+              return buildLoadingBar();
           },
         ),
       ),
+    );
+  }
+
+  ListView buildListView(List item) {
+    return ListView.builder(
+        itemCount: item.length,
+        itemBuilder: (context, index) {
+          return Container(
+            margin: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(3.0),
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.blueAccent),
+                borderRadius: BorderRadius.circular(16)),
+            child: ListTile(
+              leading: Icon(Icons.star),
+              title: Text(item[index]['username']),
+              subtitle: Text("Toplam dikim:" + item[index]['user_tree_count']),
+              trailing: Text(formatDate(
+                  (DateTime.fromMicrosecondsSinceEpoch(
+                      item[index]['timestamp'] * 1000)),
+                  [yyyy, '-', mm, '-', dd])),
+            ),
+          );
+        });
+  }
+
+  Center buildLoadingBar() {
+    return Center(
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Icon(
+          Icons.now_widgets_outlined,
+          size: 100,
+        ),
+        Text("Henüz kayıtlı veri yok.")
+      ]),
+    );
+  }
+
+  Container buildGradientAppBarContainer() {
+    return Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: <Color>[Color(0xFF6C7EBA), Color(0xFFD1AC9)])),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ButtonRegister extends StatelessWidget {
-  const ButtonRegister({
+class CustomButton extends StatelessWidget {
+  const CustomButton({
     Key key,
     @required this.bgColor,
     @required this.icon,
