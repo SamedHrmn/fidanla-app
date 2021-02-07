@@ -7,7 +7,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  /*final _firebaseReferance = FirebaseDatabase().reference().child("trees");
+  /* final _firebaseReferance = FirebaseDatabase().reference().child("trees");
   String name = "Kavak";
   String price = "10";
   String img =

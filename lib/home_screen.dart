@@ -8,7 +8,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final _firebaseReferance = FirebaseDatabase().reference().child("users");
+  final _usersReferance = FirebaseDatabase().reference().child("users");
 
   @override
   void initState() {
@@ -24,11 +24,18 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[Color(0xFF6C7EBA), Color(0xFFD1AC9)])),
+        ),
         title: Text("Anasayfa"),
       ),
       body: Container(
         child: StreamBuilder(
-          stream: _firebaseReferance.onValue,
+          stream: _usersReferance.onValue,
           builder: (context, snap) {
             if (snap.hasData &&
                 !snap.hasError &&
@@ -40,17 +47,26 @@ class _HomeScreenState extends State<HomeScreen> {
                   (index, data) => item.add({"email": index, ...data}));
 
               return ListView.builder(
-                itemCount: item.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(item[index]['email']),
-                    trailing: Text(formatDate(
-                        (DateTime.fromMicrosecondsSinceEpoch(
-                            item[index]['timestamp'] * 1000)),
-                        [yyyy, '-', mm, '-', dd])),
-                  );
-                },
-              );
+                  itemCount: item.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.all(3.0),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.blueAccent),
+                          borderRadius: BorderRadius.circular(16)),
+                      child: ListTile(
+                        leading: Icon(Icons.star),
+                        title: Text(item[index]['username']),
+                        subtitle: Text(
+                            "Toplam dikim:" + item[index]['user_tree_count']),
+                        trailing: Text(formatDate(
+                            (DateTime.fromMicrosecondsSinceEpoch(
+                                item[index]['timestamp'] * 1000)),
+                            [yyyy, '-', mm, '-', dd])),
+                      ),
+                    );
+                  });
             } else
               return Center(
                 child: Column(

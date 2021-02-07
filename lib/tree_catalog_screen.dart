@@ -16,15 +16,14 @@ class _TreeCatalogScreenState extends State<TreeCatalogScreen> {
   String selectedIlce = "Çubuk";
   List treeItem = [];
   int pageIndex = 0;
-  int count = 0;
 
   final _firebaseReferance = FirebaseDatabase().reference().child("trees");
   DatabaseReference _referenceBuying;
-
+  var listener;
   @override
   void initState() {
-    countryList = ["Ankara", "Antalya", "Yozgat", "Los Angeles"];
-    ilceList = ["Çubuk", "Muratpaşa", "Çökelek", "Miami"];
+    countryList = ["Ankara", "Antalya", "Yozgat", "Konya"];
+    ilceList = ["Çubuk", "Muratpaşa", "Çökelek", "Karatay"];
 
     final uuid = FirebaseAuth.instance.currentUser.uid;
     _referenceBuying =
@@ -52,9 +51,21 @@ class _TreeCatalogScreenState extends State<TreeCatalogScreen> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[Color(0xFF6C7EBA), Color(0xFFD1AC9)])),
+        ),
         title: Text("Katalog"),
       ),
       body: StreamBuilder(
@@ -186,6 +197,18 @@ class _TreeCatalogScreenState extends State<TreeCatalogScreen> {
       "tree_ilce": tree_ilce,
       "timestamp": DateTime.now().millisecondsSinceEpoch
     });
-    count++;
+
+    _referenceBuying.once().then((value) {
+      print("VERITABANINDAN GELEN DEGER : " +
+          value.value["user_tree_count"].toString());
+      int dbCounter = int.parse(value.value["user_tree_count"]);
+      dbCounter++;
+
+      updateCounter(dbCounter.toString());
+    });
+  }
+
+  updateCounter(String value) async {
+    await _referenceBuying.update({'user_tree_count': value});
   }
 }

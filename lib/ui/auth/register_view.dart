@@ -47,11 +47,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(AssetConstanst.LOGIN_BACKGROUND_PATH))),
+                    image: AssetImage(AssetConstanst.LOGIN_BACKGROUND_PATH),
+                    fit: BoxFit.fill)),
           ),
           Column(
             children: [
               Container(
+                margin: EdgeInsets.only(top: 65),
                 width: 100,
                 height: 100,
                 decoration: BoxDecoration(
@@ -108,6 +110,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 margin: EdgeInsets.symmetric(horizontal: 40),
                 child: TextFormField(
                   keyboardType: TextInputType.visiblePassword,
+                  obscureText: true,
                   decoration: InputDecoration(
                       labelText: "Sifre",
                       labelStyle: TextStyle(color: Colors.white),
@@ -176,6 +179,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         "email": _email,
         "password": _psw,
         "phonenumber": _phone,
+        "user_tree_count": "0",
         "timestamp": DateTime.now().millisecondsSinceEpoch
       });
       Navigator.push(

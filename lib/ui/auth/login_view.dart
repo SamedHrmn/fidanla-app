@@ -2,11 +2,11 @@ import 'package:fidanla_app/core/components/button_widget.dart';
 import 'package:fidanla_app/core/constants/assets_constants.dart';
 import 'package:fidanla_app/home_screen.dart';
 import 'package:fidanla_app/tabbar_router.dart';
+import 'package:fidanla_app/ui/auth/register_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_safetynet_attestation/flutter_safetynet_attestation.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -45,12 +45,13 @@ class _LoginScreenState extends State<LoginScreen> {
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(AssetConstanst.LOGIN_BACKGROUND_PATH))),
+                    image: AssetImage(AssetConstanst.LOGIN_BACKGROUND_PATH),
+                    fit: BoxFit.fill)),
           ),
           Column(
             children: [
               Container(
-                margin: EdgeInsets.only(top: 50),
+                margin: EdgeInsets.only(top: 65),
                 width: 100,
                 height: 100,
                 decoration: BoxDecoration(
@@ -84,6 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 margin: EdgeInsets.symmetric(horizontal: 40),
                 child: TextFormField(
                   keyboardType: TextInputType.visiblePassword,
+                  obscureText: true,
                   decoration: InputDecoration(
                       labelText: "Sifre",
                       labelStyle: TextStyle(color: Colors.white),
@@ -103,9 +105,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   labelText: Text("Giriş Yap"),
                   borderColor: Colors.white),
               GestureDetector(
-                child: Text("Hesabım yok.."),
-                onTap: () => Navigator.pop(context),
-              )
+                  child: Text("Hesabım yok.."),
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RegisterScreen(),
+                      )))
             ],
           )
         ]),
